@@ -6,12 +6,13 @@ let randomNumber = Math.floor(Math.random() * 3 + 1);
 if(randomNumber == 1){
   computerMove = 'kamień';
 }
-if(randomNumber == 2){
+else if(randomNumber == 2){
   computerMove = 'papier';
 }
-if(randomNumber == 3){
+else if(randomNumber == 3){
   computerMove = 'nozyce';
 }
+
 
 // player player move
 let playerInput = prompt('Wybierz swój ruch! 1: kamień, 2: papier, 3: nożyce.');
