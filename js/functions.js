@@ -41,4 +41,7 @@ function displayResult(argComputerMove, argPlayerMove){
   else if (argPlayerMove == 'nieznany ruch') {
     printMessage('Wybierz F5 i podaj poprawną wartość');
   }
+	else {
+		printMessage('Wygrałeś!!!');
+	}
 }
