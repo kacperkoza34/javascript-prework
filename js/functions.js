@@ -116,5 +116,5 @@ function displayPoints(){
 function restartPoints(){
 	playerPoints = 0;
 	computerPoints = 0;
-	displayScore();
+	displayPoints();
 }
