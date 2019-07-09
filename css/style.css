@@ -1,17 +1,40 @@
 /*GLOBAL*/
-body {
-  background-color: #b2bec3;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-.container {
+section {
   background-color: #b2bec3;
+  height: 100vh;
 }
 
-#buttons span {
+.row {
+  min-height: 500px;
+}
+
+span {
   font-size: 50px;
 }
 
-.title h5 {
+#messages div {
   text-align: center;
+}
+
+#playerResult, #computerResult {
+  min-width: 70px;
+}
+
+.btn {
+  width: 105px;
+}
+
+.rigth-bar {
+  height: 186px;
+  margin: 8px;
+  border: solid 4px grey;
+}
+
+#player-points, #computer-points {
+  width: 42px;
 }
 /*# sourceMappingURL=style.css.map */
