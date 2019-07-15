@@ -1,6 +1,6 @@
 /*GLOBAL*/
 
-$main-color: #b2bec3;
+$main-color: #dfe6e9;
 
 *, *::before, *::after {
         box-sizing: border-box;
@@ -30,6 +30,16 @@ span {
   margin: 8px;
   border: solid 4px grey;
 }
+.left-bar{
+  margin: 8px;
+  border: solid 4px grey;
+}
 #player-points, #computer-points {
   width: 42px;
+}
+#computer-percent, #player-percent {
+  width: 58px;
+}
+p {
+  text-align: center;
 }

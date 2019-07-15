@@ -15,28 +15,27 @@ function printIcon(computerMove, playerMove){
 	div.id = 'parent';
 	div.innerHTML='';
 	document.getElementById('messages').appendChild(div);
-	printComputer(computerMove);
-	printPlayer(playerMove);
+	printResult(computerMove, playerMove);
 }
 
-function printComputer(computerIcon){
-	var resultIcon = document.createElement('div');
-	resultIcon.className = "btn btn-secondary mx-1";
-	resultIcon.id = 'computerResult';
-	if(computerIcon == 'kamień') resultIcon.innerHTML = '<span class="fas fa-hand-rock p-2"></span>';
-	else if(computerIcon == 'papier') resultIcon.innerHTML = '<span class="fas fa-hand-paper p-2"></span>';
-	else if(computerIcon == 'nożyce') resultIcon.innerHTML = '<span class="fas fa-hand-scissors p-2"></span>';
-	document.getElementById('parent').appendChild(resultIcon);
-}
+function printResult(computerIcon, playerIcon){    // <---- tutaj były dwie funcje, miała być jedna według DRY
+																									//        ale chciałem zachowac dwa rózne id elementów, to było kluczowe
+																									//        inne rozwiązenie niż z tą pętlą nie przyszło mi do głowy
+	let resultComputer = document.createElement('div');
+	resultComputer.className = "btn btn-secondary mx-1";
+	resultComputer.id = 'computerResult';
 
-function printPlayer(playerIcon){
-	var resultIcon = document.createElement('div');
-	resultIcon.className = "btn btn-secondary mx-1";
-	resultIcon.id = 'playerResult';
-	if(playerIcon == 'kamień') resultIcon.innerHTML = '<span class="fas fa-hand-rock p-2"></span>';
-	else if(playerIcon == 'papier') resultIcon.innerHTML = '<span class="fas fa-hand-paper p-2"></span>';
-	else if(playerIcon == 'nożyce') resultIcon.innerHTML = '<span class="fas fa-hand-scissors p-2"></span>';
-	document.getElementById('parent').appendChild(resultIcon);
+	let resultPlayer = document.createElement('div');
+	resultPlayer.className = "btn btn-secondary mx-1";
+	resultPlayer.id = 'playerResult';
+
+for (let i = 0; i<2; i++){
+		if(computerIcon == 'kamień' || playerIcon == 'kamień') resultComputer.innerHTML = '<span class="fas fa-hand-rock p-2"></span>';
+		else if(computerIcon == 'papier' || playerIcon == 'papier') resultComputer.innerHTML = '<span class="fas fa-hand-paper p-2"></span>';
+		else if(computerIcon == 'nożyce' || playerIcon == 'nożyce') resultComputer.innerHTML = '<span class="fas fa-hand-scissors p-2"></span>';
+		document.getElementById('parent').appendChild(resultComputer);
+		resultComputer = resultPlayer;
+	}
 }
 
 function getMoveName(argMoveId){
@@ -48,43 +47,29 @@ function getMoveName(argMoveId){
 	}
 
 function displayResult(argComputerMove, argPlayerMove){
-	var gameStatus; // 1 = win, 0 = defeat, 3 = draw
 	printMessage(' Wynik:');
 	printIcon(argComputerMove, argPlayerMove);
 	if ( argComputerMove != argPlayerMove ) printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove + '.  ');
-	else {};
 	if (argComputerMove == argPlayerMove) {
-		 gameStatus = 3;
+		 changeColor(3);
 		 printMessage(' Remis!');
 	 }
-  else if (argComputerMove == 'kamień' && argPlayerMove == 'nożyce'){
+  else if (argComputerMove == 'kamień' && argPlayerMove == 'nożyce' || argComputerMove == 'nożyce' && argPlayerMove == 'papier'  || argComputerMove == 'papier' && argPlayerMove == 'kamień'){
 		 computerPoints++;
-		 gameStatus = 0;
+		 changeColor(0);
 		 printMessage(' Przegrałeś!');
 		}
-  else if (argComputerMove == 'nożyce' && argPlayerMove == 'papier'){
-		computerPoints++;
-		gameStatus = 0;
-		printMessage(' Przegrałeś!');
-	}
-  else if (argComputerMove == 'papier' && argPlayerMove == 'kamień'){
-		computerPoints++;
-		gameStatus = 0;
-		printMessage(' Przegrałeś!');
-	}
 //  else if (argPlayerMove == 'nieznany ruch') printMessage(' Wybierz F5 i podaj poprawną wartość');
 	else {
 		playerPoints++;
-		gameStatus = 1;
+		changeColor(1);
 		printMessage(' Wygrałeś!');
 	}
-	changeColor(gameStatus);
-
 }
 
 function changeColor(gameStatus){
-	var player = document.getElementById("playerResult");
-	var computer = document.getElementById("computerResult");
+	let player = document.getElementById("playerResult");
+	let computer = document.getElementById("computerResult");
 	if(gameStatus == 1){
  		player.style.background = 'green' ;
  		computer.style.background = 'red' ;
@@ -100,21 +85,33 @@ function changeColor(gameStatus){
 }
 
 function playGame(playerInput){
+//	for( let i = 0; i < 100; i++ ){
 	clearMessages();
   let randomNumber = Math.floor(Math.random() * 3 + 1);
   let computerMove = getMoveName(randomNumber);
   let playerMove = getMoveName(playerInput);
   displayResult(computerMove, playerMove);
 	displayPoints();
+	//}
 }
 
 function displayPoints(){
 	document.getElementById('player-points').innerHTML = playerPoints;
 	document.getElementById('computer-points').innerHTML = computerPoints;
+	displayPercent(computerPoints, playerPoints);
 }
 
 function restartPoints(){
 	playerPoints = 0;
 	computerPoints = 0;
 	displayPoints();
+}
+
+function displayPercent(computerPoints, playerPoints){
+	let playerPercent = 0;
+	let computerPercent = 0;
+	if ( playerPoints != 0 ) playerPercent = Math.floor(playerPoints / (computerPoints + playerPoints)*100);
+	if ( computerPoints != 0) computerPercent = Math.floor(computerPoints / (computerPoints + playerPoints)*100);
+	document.getElementById('player-percent').innerHTML = playerPercent + "%";
+	document.getElementById('computer-percent').innerHTML = computerPercent + "%";
 }
