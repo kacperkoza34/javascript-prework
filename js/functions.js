@@ -1,5 +1,5 @@
 function printMessage(msg){
-	var div = document.createElement('div');
+	const div = document.createElement('div');
 	div.class="result"
 	div.innerHTML = msg;
 	document.getElementById('messages').appendChild(div);
@@ -10,7 +10,7 @@ function clearMessages(){
 }
 
 function printIcon(computerMove, playerMove){
-	var div = document.createElement('div');
+	const div = document.createElement('div');
 	div.className = "d-flex justify-content-center py-1";
 	div.id = 'parent';
 	div.innerHTML='';
@@ -18,9 +18,8 @@ function printIcon(computerMove, playerMove){
 	printResult(computerMove, playerMove);
 }
 
-function printResult(computerIcon, playerIcon){    // <---- tutaj były dwie funcje, miała być jedna według DRY
-																									//        ale chciałem zachowac dwa rózne id elementów, to było kluczowe
-																									//        inne rozwiązenie niż z tą pętlą nie przyszło mi do głowy
+function printResult(computerIcon, playerIcon){
+
 	let resultComputer = document.createElement('div');
 	resultComputer.className = "btn btn-secondary mx-1";
 	resultComputer.id = 'computerResult';
@@ -42,8 +41,7 @@ function getMoveName(argMoveId){
   if(argMoveId == 1) return 'kamień';
 	else if(argMoveId == 2)	return 'papier';
 	else if(argMoveId == 3) return 'nożyce';
-  //printMessage('Nie znam ruchu o id ' + argMoveId + '.');
-  //return 'nieznany ruch';
+
 	}
 
 function displayResult(argComputerMove, argPlayerMove){
@@ -68,8 +66,8 @@ function displayResult(argComputerMove, argPlayerMove){
 }
 
 function changeColor(gameStatus){
-	let player = document.getElementById("playerResult");
-	let computer = document.getElementById("computerResult");
+	const player = document.getElementById("playerResult");
+	const computer = document.getElementById("computerResult");
 	if(gameStatus == 1){
  		player.style.background = 'green' ;
  		computer.style.background = 'red' ;
@@ -82,17 +80,18 @@ function changeColor(gameStatus){
  		player.style.background = 'grey' ;
  		computer.style.background = 'grey' ;
 	}
+
 }
 
 function playGame(playerInput){
-//	for( let i = 0; i < 100; i++ ){
-	clearMessages();
-  let randomNumber = Math.floor(Math.random() * 3 + 1);
-  let computerMove = getMoveName(randomNumber);
-  let playerMove = getMoveName(playerInput);
-  displayResult(computerMove, playerMove);
-	displayPoints();
-	//}
+	for( let i = 0; i < 100; i++ ){
+		clearMessages();
+	  const randomNumber = Math.floor(Math.random() * 2 + 1);
+	  const computerMove = getMoveName(randomNumber);
+	  const playerMove = getMoveName(playerInput);
+	  displayResult(computerMove, playerMove);
+		displayPoints();
+	}
 }
 
 function displayPoints(){
